@@ -6,6 +6,25 @@ function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    async function handleLogin() {
+        const response = await fetch("http://localhost:8080/api/v1/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email: email, password: password })
+        });
+
+        const data = await response.json();
+        
+        if (response.ok) {
+            localStorage.setItem('token', data.token);
+            console.log('Токен сохранён:', data.token);
+        } else {
+            console.log('Ошибка входа:', data);
+        }
+    }
+
     return (
         <div className="login-container">
             <div className="login-wrapper">
@@ -30,7 +49,7 @@ function LoginPage() {
                         </div>
                         <button
                             className="login-button"
-                            onClick={() => console.log(email, password)}
+                            onClick={handleLogin}
                         >
                             Войти
                         </button>
