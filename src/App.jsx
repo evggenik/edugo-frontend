@@ -1,12 +1,12 @@
 
-
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 
 function App() {
   return (
     <div>
-      <h1>EduGo</h1>
-      <p>Электронный дневник</p>
+      
+      <LoginPage/>
     </div>
   )
 }
