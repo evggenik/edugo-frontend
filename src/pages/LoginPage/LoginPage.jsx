@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import "./LoginPage.css";
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
 
     async function handleLogin() {
         const response = await fetch("http://localhost:8080/api/v1/auth/login", {
@@ -19,9 +22,9 @@ function LoginPage() {
         
         if (response.ok) {
             localStorage.setItem('token', data.token);
-            console.log('Токен сохранён:', data.token);
+            navigate('/schedule');
         } else {
-            console.log('Ошибка входа:', data);
+            setError('Неверный логин или пароль');
         }
     }
 
@@ -32,6 +35,7 @@ function LoginPage() {
                 <div className="login-card">
                     <div className="login-header">Войти в EduGo</div>
                     <div className="login-body">
+                        {error && <p className="error-message">{error}</p>}
                         <div className="form-group">
                             <label>Логин</label>
                             <input
