@@ -9,16 +9,14 @@ function SchedulePage() {
             const token = getToken();
             const decoded = getDecodedToken();
 
-            // ВРЕМЕННО захардкожено — в базе сейчас нет уроков на реальное "сегодня",
-            // только тестовые в диапазоне 3 четверти. Вернём динамическую дату,
-            // когда заведём актуальную четверть.
-            const from = "2026-02-01T00:00:00.000Z";
-            const to = "2026-02-28T23:59:59.000Z";
+            const today = new Date();
+            const nextWeek = new Date();
+            nextWeek.setDate(today.getDate() + 7);
 
             const params = new URLSearchParams({
                 teacherId: decoded.userId,
-                from: from,
-                to: to
+                from: today.toISOString(),
+                to: nextWeek.toISOString()
             });
 
             const response = await fetch(
