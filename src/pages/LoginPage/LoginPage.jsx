@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserRole } from "../../utils/auth";
 import logo from "../../assets/logo.png";
 import "./LoginPage.css";
 
@@ -22,7 +23,13 @@ function LoginPage() {
         
         if (response.ok) {
             localStorage.setItem('token', data.token);
-            navigate('/schedule');
+
+            const role = getUserRole();
+            if (role === 'TEACHER') {
+            navigate('/teachers');
+            } else {
+                navigate('/not-supported');
+            }
         } else {
             setError('Неверный логин или пароль');
         }
