@@ -1,0 +1,96 @@
+.schedule-page {
+    padding: 24px;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.schedule-table th,
+.schedule-table td {
+    border: 1px solid #e0e0e0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.schedule-table th {
+    background-color: #e8f0fe;
+    color: #333;
+}
+
+.lesson-subject {
+    font-weight: bold;
+    color: #2b6cb0;
+}
+
+.lesson-room {
+    color: #888;
+    font-size: 13px;
+}
+
+.schedule-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f7f9fc;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 14px 20px;
+    margin-bottom: 16px;
+}
+
+.schedule-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.schedule-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.view-toggle {
+    border: 1px solid #ccc;
+    background-color: #2b6cb0;
+    color: white;
+    padding: 6px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.schedule-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.link-button {
+    background: none;
+    border: none;
+    color: #2b6cb0;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0;
+}
+
+.arrow-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    padding: 0 4px;
+}
+
+.selected-date {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    min-width: 130px;
+    text-align: center;
+}
