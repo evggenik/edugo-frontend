@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
 import { getToken, getDecodedToken } from "../../utils/auth";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { registerLocale } from "react-datepicker";
+import { ru } from "date-fns/locale/ru";
+
+registerLocale("ru", ru);
+
 import "./SchedulePage.css";
 
 function SchedulePage() {
@@ -11,16 +20,15 @@ function SchedulePage() {
             const token = getToken();
             const decoded = getDecodedToken();
 
-            const startOfDay = new Date(selectedDate);
-            startOfDay.setHours(0, 0, 0, 0);
-
-            const endOfDay = new Date(selectedDate);
-            endOfDay.setHours(23, 59, 59, 999);
+            const from = new Date(selectedDate);
+            from.setHours(0, 0, 0, 0);
+            const to = new Date(selectedDate);
+            to.setHours(23, 59, 59, 999);
 
             const params = new URLSearchParams({
                 teacherId: decoded.userId,
-                from: startOfDay.toISOString(),
-                to: endOfDay.toISOString()
+                from: from.toISOString(),
+                to: to.toISOString()
             });
 
             const response = await fetch(
@@ -39,16 +47,16 @@ function SchedulePage() {
         fetchLessons();
     }, [selectedDate]);
 
-    function goToPreviousDay() {
-        const prevDay = new Date(selectedDate);
-        prevDay.setDate(selectedDate.getDate() - 1);
-        setSelectedDate(prevDay);
+    function goToPrevious() {
+        const prev = new Date(selectedDate);
+        prev.setDate(selectedDate.getDate() - 1);
+        setSelectedDate(prev);
     }
 
-    function goToNextDay() {
-        const nextDay = new Date(selectedDate);
-        nextDay.setDate(selectedDate.getDate() + 1);
-        setSelectedDate(nextDay);
+    function goToNext() {
+        const next = new Date(selectedDate);
+        next.setDate(selectedDate.getDate() + 1);
+        setSelectedDate(next);
     }
 
     function goToToday() {
@@ -56,53 +64,54 @@ function SchedulePage() {
     }
 
     return (
-    <div className="schedule-page">
-        <h1>Мое расписание</h1>
-
-        <div className="schedule-header">
-            <div className="schedule-header-left">
-                <span className="schedule-title">Мое расписание на</span>
-                <button className="view-toggle active">День</button>
+        <div className="schedule-page">
+            <div className="schedule-header">
+                <div className="schedule-header-left">
+                    <span className="schedule-title">Мое расписание на день</span>
+                </div>
+                <div className="schedule-header-right">
+                    <button className="link-button" onClick={goToToday}>Сегодня</button>
+                    <button className="arrow-button" onClick={goToPrevious}>‹</button>
+                    <DatePicker
+                        selected={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        dateFormat="d MMM, EEE"
+                        locale="ru"
+                        className="date-picker-input"
+                    />
+                    <button className="arrow-button" onClick={goToNext}>›</button>
+                </div>
             </div>
-            <div className="schedule-header-right">
-                <button className="link-button" onClick={goToToday}>Сегодня</button>
-                <button className="arrow-button" onClick={goToPreviousDay}>‹</button>
-                <span className="selected-date">
-                    {selectedDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', weekday: 'short' })}
-                </span>
-                <button className="arrow-button" onClick={goToNextDay}>›</button>
-            </div>
-        </div>
 
-        <table className="schedule-table">
-            <thead>
-                <tr>
-                    <th>№</th>
-                    <th>Время</th>
-                    <th>Урок</th>
-                    <th>Тема урока</th>
-                    <th>Домашнее задание</th>
-                </tr>
-            </thead>
-            <tbody>
-                {lessons.map((lesson, index) => (
-                    <tr key={lesson.id}>
-                        <td>{index + 1}</td>
-                        <td>
-                            {lesson.startTime.slice(11, 16)} - {lesson.endTime.slice(11, 16)}
-                        </td>
-                        <td>
-                            <div className="lesson-subject">{lesson.subjectName}</div>
-                            <div className="lesson-room">кабинет {lesson.room}</div>
-                        </td>
-                        <td>—</td>
-                        <td>—</td>
+            <table className="schedule-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Время</th>
+                        <th>Урок</th>
+                        <th>Тема урока</th>
+                        <th>Домашнее задание</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
-    </div>
-)
+                </thead>
+                <tbody>
+                    {lessons.map((lesson, index) => (
+                        <tr key={lesson.id}>
+                            <td>{index + 1}</td>
+                            <td>
+                                {lesson.startTime.slice(11, 16)} - {lesson.endTime.slice(11, 16)}
+                            </td>
+                            <td>
+                                <div className="lesson-subject">{lesson.subjectName}</div>
+                                <div className="lesson-room">кабинет {lesson.room}</div>
+                            </td>
+                            <td>—</td>
+                            <td>—</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
 }
 
 export default SchedulePage;

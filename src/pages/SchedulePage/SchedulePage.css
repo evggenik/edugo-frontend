@@ -53,16 +53,6 @@
     color: #333;
 }
 
-.view-toggle {
-    border: 1px solid #ccc;
-    background-color: #2b6cb0;
-    color: white;
-    padding: 6px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
 .schedule-header-right {
     display: flex;
     align-items: center;
@@ -93,4 +83,15 @@
     color: #333;
     min-width: 130px;
     text-align: center;
+}
+
+.date-picker-input {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    border: none;
+    background: none;
+    text-align: center;
+    width: 130px;
+    cursor: pointer;
 }
