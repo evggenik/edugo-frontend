@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getToken, getDecodedToken } from "../../utils/auth";
+import Header from "../../components/Header/Header";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -64,6 +65,8 @@ function SchedulePage() {
     }
 
     return (
+        <>
+            <Header />
         <div className="schedule-page">
             <div className="schedule-header">
                 <div className="schedule-header-left">
@@ -111,6 +114,7 @@ function SchedulePage() {
                 </tbody>
             </table>
         </div>
+        </>
     )
 }
 
