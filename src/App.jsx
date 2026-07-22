@@ -3,6 +3,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SchedulePage from "./pages/SchedulePage/SchedulePage";
 import NotSupportedPage from "./pages/NotSupportedPage/NotSupportedPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import Layout from "./components/Layout/Layout";
 
 
 function App() {
@@ -11,10 +13,19 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/teachers" element={
         <ProtectedRoute allowedRole="TEACHER">
-            <SchedulePage />
+            <Layout>
+              <SchedulePage />
+            </Layout>
         </ProtectedRoute>
       } />
       <Route path="/not-supported" element={<NotSupportedPage />} />
+      <Route path="/profile" element={
+        <ProtectedRoute>
+          <Layout>
+            <ProfilePage />
+          </Layout>
+        </ProtectedRoute>
+      } />
 
     </Routes>
   )
